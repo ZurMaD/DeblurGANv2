@@ -15,7 +15,7 @@ from models.networks import get_generator
 
 class Predictor:
     def __init__(self, weights_path: str, model_name: str = ''):
-        with open('config/config.yaml') as cfg:
+        with open('/content/DeblurGANv2/config/config.yaml') as cfg:
             config = yaml.load(cfg)
         model = get_generator(model_name or config['model'])
         model.load_state_dict(torch.load(weights_path)['model'])

@@ -18,6 +18,8 @@ class Predictor:
         with open('/content/DeblurGANv2/config/config.yaml') as cfg:
             config = yaml.load(cfg)
         model = get_generator(model_name or config['model'])
+        v1=torch.load(weights_path)
+        v2=torch.load(weights_path)['model']
         model.load_state_dict(torch.load(weights_path)['model'])
         self.model = model.cuda()
         self.model.train(True)
@@ -101,6 +103,7 @@ def main(img_pattern: str,
     masks = sorted_glob(mask_pattern) if mask_pattern is not None else [None for _ in imgs]
     pairs = zip(imgs, masks)
     names = sorted([os.path.basename(x) for x in glob(img_pattern)])
+    print(weights_path)
     predictor = Predictor(weights_path=weights_path)
 
     os.makedirs(out_dir, exist_ok=True)

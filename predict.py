@@ -19,8 +19,8 @@ class Predictor:
             config = yaml.load(cfg)
         model = get_generator(model_name or config['model'])
         v1=torch.load(weights_path)
-        v2=torch.load(weights_path)['model']
-        model.load_state_dict(torch.load(weights_path)['model'])
+        # v2=torch.load(weights_path)['model']
+        model.load_state_dict(torch.load(weights_path))
         self.model = model.cuda()
         self.model.train(True)
         # GAN inference should be in train mode to use actual stats in norm layers,
